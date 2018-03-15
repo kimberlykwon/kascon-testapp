@@ -1,14 +1,98 @@
+// Import necessary items
 import React, { Component } from 'react';
 import { Platform, View, ScrollView, Text, StatusBar, SafeAreaView, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import SliderEntry, {sliderWidth, itemWidth} from './SlideEntry';
-import { LAW, HEADINGS, OPENING, JOURNALISM } from './entries';
 
+// Define constants
 const IS_ANDROID = Platform.OS === 'android';
 const SLIDER_1_FIRST_ITEM = 0;
 
-export default class example extends Component {
+const HEADINGS = [
+  'Opening Speaker',
+  'Korean Americans in Journalism',
+  'Korean Americans in Entrepreneurship',
+  'Korean Americans in Fashion',
+  'Korean Americans in Law',
+  'Korean Americans in Academia',
+  'Korean American Women',
+  'Closing Speaker'
+];
 
+const colors = {
+  black: '#1a1917',
+  gray: '#888888'
+};
+
+const SPEAKERS = [
+  // opening
+  [
+    {
+      illustration: require('./images/Jin_Ha.jpg')
+    }
+  ],
+  // journalism
+  [
+    {
+      illustration: require('./images/Katie_Kim.jpg')
+    },
+    {
+      illustration: require('./images/Nydia_Han.jpg')
+    }
+  ],
+  // entrepreneurship
+  [
+    {
+      illustration: require('./images/Mike_Kim_and_Theo_Lee.jpg')
+    }
+  ],
+  // fashion
+  [
+    {
+      illustration: require('./images/Dae_Lim.jpg')
+    },
+    {
+      illustration: require('./images/Peter_Kim.jpg')
+    },
+    {
+      illustration: require('./images/Lydia_Forstmann.jpg')
+    }
+  ],
+  // law
+  [
+    {
+      illustration: require('./images/Eunkyung_Kim_Shin.jpg')
+    },
+    {
+      illustration: require('./images/Eunkyung_Kim_Shin.jpg')
+    }
+  ],
+  // academia
+  [
+    {
+      illustration: require('./images/Eunkyung_Kim_Shin.jpg')
+    }
+  ],
+  // women
+  [
+    {
+      illustration: require('./images/Susan_Jung_Townsend.jpg')
+    },
+    {
+      illustration: require('./images/Crystal_Kim.jpg')
+    }
+  ],
+  // closing
+  [
+    {
+      illustration: require('./images/Jin_Ha.jpg')
+    }
+  ]
+];
+
+
+// Main app functionality
+export default class example extends Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -20,6 +104,7 @@ export default class example extends Component {
         return <SliderEntry data={item} />;
     }
 
+    // View of each slide space for one speaker
     oneSpeaker (number, title) {
       const { slider1ActiveSlide } = this.state;
 
@@ -29,7 +114,7 @@ export default class example extends Component {
               <Text style={styles.subtitle}>{title}</Text>
               <Carousel
                 ref={c => this._slider1Ref = c}
-                data={OPENING}
+                data={SPEAKERS[number]}
                 renderItem = {this._renderItem}
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
@@ -45,6 +130,7 @@ export default class example extends Component {
       );
     }
 
+    // View of each slide space for multiple speakers
     multSpeakers (number, title) {
         const { slider1ActiveSlide } = this.state;
 
@@ -54,7 +140,7 @@ export default class example extends Component {
                 <Text style={styles.subtitle}>{title}</Text>
                 <Carousel
                   ref={c => this._slider1Ref = c}
-                  data={JOURNALISM}
+                  data={SPEAKERS[number]}
                   renderItem = {this._renderItem}
                   sliderWidth={sliderWidth}
                   itemWidth={itemWidth}
@@ -67,7 +153,7 @@ export default class example extends Component {
                   onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
                 />
                 <Pagination
-                  dotsLength={JOURNALISM.length}
+                  dotsLength={SPEAKERS[number].length}
                   activeDotIndex={slider1ActiveSlide}
                   containerStyle={styles.paginationContainer}
                   dotColor={'rgba(101, 78, 163, 0.92)'} // pantone purple
@@ -82,6 +168,7 @@ export default class example extends Component {
         );
     }
 
+    // Construct all speakers and show on screen
     render () {
         const example0 = this.oneSpeaker(0, 'blah blah blah ');
         const example1 = this.multSpeakers(1, 'blah blah blah ');
@@ -118,11 +205,7 @@ export default class example extends Component {
     }
 }
 
-const colors = {
-  black: '#1a1917',
-  gray: '#888888'
-};
-
+// Stylesheet
 const styles = StyleSheet.create({
   safeArea: {
       flex: 1,

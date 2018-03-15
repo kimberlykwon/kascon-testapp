@@ -8,17 +8,6 @@ export default class SliderEntry extends Component {
         data: PropTypes.object.isRequired
     };
 
-    // get image () {
-    //     const { data: { illustration }} = this.props;
-
-    //     return (
-    //         <Image
-    //           source={{illustration}}
-    //           style={styles.image}
-    //         />
-    //     );
-    // }
-
     render () {
         const { data: { title, subtitle, illustration }} = this.props;
 
